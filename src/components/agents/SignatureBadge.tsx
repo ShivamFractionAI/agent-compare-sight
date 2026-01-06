@@ -1,10 +1,29 @@
 import signaturePen from '@/assets/signature-pen.svg';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
-export function SignatureBadge() {
+interface SignatureBadgeProps {
+  creator: string;
+}
+
+export function SignatureBadge({ creator }: SignatureBadgeProps) {
   return (
-    <div className="flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5">
-      <img src={signaturePen} alt="Signature" className="h-3.5 w-3.5" />
-      <span className="text-xs font-medium text-primary">Signature</span>
-    </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 cursor-help">
+            <img src={signaturePen} alt="Signature Agent" className="h-3.5 w-3.5" />
+          </div>
+        </TooltipTrigger>
+        <TooltipContent side="top" className="max-w-xs">
+          <p className="font-medium">Signature Agent</p>
+          <p className="text-xs text-muted-foreground">Created by {creator}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

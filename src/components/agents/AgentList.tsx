@@ -9,6 +9,12 @@ import {
 } from '@/components/ui/table';
 import { AgentListRow } from './AgentListRow';
 import { cn } from '@/lib/utils';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface AgentListProps {
   agents: Agent[];
@@ -44,12 +50,22 @@ export function AgentList({ agents, sortField, sortDirection, onSort }: AgentLis
       <Table>
         <TableHeader>
           <TableRow className="border-border/50 hover:bg-transparent">
-            <SortableHeader field="name" className="w-[300px]">Agent</SortableHeader>
-            <TableHead className="w-[180px]">Protocols</TableHead>
+            <SortableHeader field="name" className="w-[280px]">Agent</SortableHeader>
+            <TableHead className="w-[160px]">Protocols</TableHead>
             <SortableHeader field="apy" className="w-[80px]">APY</SortableHeader>
-            <SortableHeader field="totalInstances" className="w-[120px]">Instances</SortableHeader>
+            <SortableHeader field="totalInstances" className="w-[100px]">Instances</SortableHeader>
             <SortableHeader field="tvl" className="w-[100px]">TVL</SortableHeader>
-            <TableHead className="w-[280px]">Actions</TableHead>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SortableHeader field="fees" className="w-[80px]">Fees</SortableHeader>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p>Transaction Fees + Performance Fees</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TableHead className="w-[240px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

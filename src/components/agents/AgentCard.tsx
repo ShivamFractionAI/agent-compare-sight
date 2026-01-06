@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Agent } from '@/types/agent';
 import { SignatureBadge } from './SignatureBadge';
+import { CoreBadge } from './CoreBadge';
 import { ProtocolBadge } from './ProtocolBadge';
+import { FeeTooltip } from './FeeTooltip';
 import { AgentActions } from './AgentActions';
 import { formatTVL, getApyColor } from '@/lib/formatters';
 
@@ -10,8 +13,17 @@ interface AgentCardProps {
 }
 
 export function AgentCard({ agent }: AgentCardProps) {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/agents/${agent.id}`);
+  };
+
   return (
-    <Card className="group relative overflow-hidden border-border/50 bg-card/50 backdrop-blur transition-all hover:border-border hover:bg-card/80">
+    <Card 
+      className="group relative overflow-hidden border-border/50 bg-card/50 backdrop-blur transition-all hover:border-border hover:bg-card/80 cursor-pointer"
+      onClick={handleCardClick}
+    >
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
@@ -23,7 +35,11 @@ export function AgentCard({ agent }: AgentCardProps) {
               <p className="text-sm text-muted-foreground">by {agent.creator}</p>
             </div>
           </div>
-          {agent.type === 'signature' && <SignatureBadge />}
+          {agent.type === 'signature' ? (
+            <SignatureBadge creator={agent.creator} />
+          ) : (
+            <CoreBadge />
+          )}
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -33,7 +49,7 @@ export function AgentCard({ agent }: AgentCardProps) {
           ))}
         </div>
         
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           <div>
             <p className="text-xs text-muted-foreground">APY</p>
             <p className={`text-lg font-semibold ${getApyColor(agent.apy)}`}>
@@ -57,10 +73,19 @@ export function AgentCard({ agent }: AgentCardProps) {
               {formatTVL(agent.tvl)}
             </p>
           </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Fees</p>
+            <p className="text-lg font-semibold">
+              <FeeTooltip 
+                transactionFee={agent.transactionFee} 
+                performanceFee={agent.performanceFee} 
+              />
+            </p>
+          </div>
         </div>
         
         <div className="flex justify-end pt-2">
-          <AgentActions agentId={agent.id} hasDeposit={agent.hasDeposit} />
+          <AgentActions hasDeposit={agent.hasDeposit} />
         </div>
       </CardContent>
     </Card>

@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { Agent } from '@/types/agent';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { SignatureBadge } from './SignatureBadge';
+import { CoreBadge } from './CoreBadge';
 import { ProtocolBadge } from './ProtocolBadge';
+import { FeeTooltip } from './FeeTooltip';
 import { AgentActions } from './AgentActions';
 import { formatTVL, getApyColor } from '@/lib/formatters';
 
@@ -10,8 +13,17 @@ interface AgentListRowProps {
 }
 
 export function AgentListRow({ agent }: AgentListRowProps) {
+  const navigate = useNavigate();
+
+  const handleRowClick = () => {
+    navigate(`/agents/${agent.id}`);
+  };
+
   return (
-    <TableRow className="group border-border/50 transition-colors hover:bg-muted/30">
+    <TableRow 
+      className="group border-border/50 transition-colors hover:bg-muted/30 cursor-pointer"
+      onClick={handleRowClick}
+    >
       <TableCell className="py-4">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted text-xl">
@@ -20,7 +32,11 @@ export function AgentListRow({ agent }: AgentListRowProps) {
           <div>
             <div className="flex items-center gap-2">
               <p className="font-medium text-foreground">{agent.name}</p>
-              {agent.type === 'signature' && <SignatureBadge />}
+              {agent.type === 'signature' ? (
+                <SignatureBadge creator={agent.creator} />
+              ) : (
+                <CoreBadge />
+              )}
             </div>
             <p className="text-xs text-muted-foreground">by {agent.creator}</p>
           </div>
@@ -55,7 +71,13 @@ export function AgentListRow({ agent }: AgentListRowProps) {
         <span className="font-medium text-foreground">{formatTVL(agent.tvl)}</span>
       </TableCell>
       <TableCell>
-        <AgentActions agentId={agent.id} hasDeposit={agent.hasDeposit} />
+        <FeeTooltip 
+          transactionFee={agent.transactionFee} 
+          performanceFee={agent.performanceFee} 
+        />
+      </TableCell>
+      <TableCell>
+        <AgentActions hasDeposit={agent.hasDeposit} />
       </TableCell>
     </TableRow>
   );

@@ -10,8 +10,10 @@ export interface Agent {
   tvl: number;
   creator: string;
   hasDeposit: boolean;
+  transactionFee: number;
+  performanceFee: number;
 }
 
-export type SortField = 'name' | 'apy' | 'tvl' | 'totalInstances';
+export type SortField = 'name' | 'apy' | 'tvl' | 'totalInstances' | 'fees';
 export type SortDirection = 'asc' | 'desc';
 export type ViewMode = 'cards' | 'list';

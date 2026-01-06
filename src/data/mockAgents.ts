@@ -13,6 +13,8 @@ export const mockAgents: Agent[] = [
     tvl: 1250000,
     creator: 'DeFi Labs',
     hasDeposit: true,
+    transactionFee: 0.5,
+    performanceFee: 10,
   },
   {
     id: '2',
@@ -26,6 +28,8 @@ export const mockAgents: Agent[] = [
     tvl: 3400000,
     creator: 'Alpha Strategies',
     hasDeposit: false,
+    transactionFee: 0.3,
+    performanceFee: 15,
   },
   {
     id: '3',
@@ -39,6 +43,8 @@ export const mockAgents: Agent[] = [
     tvl: 890000,
     creator: 'Fraction AI',
     hasDeposit: true,
+    transactionFee: 0.2,
+    performanceFee: 5,
   },
   {
     id: '4',
@@ -52,6 +58,8 @@ export const mockAgents: Agent[] = [
     tvl: 5600000,
     creator: 'Bridge Masters',
     hasDeposit: true,
+    transactionFee: 0.8,
+    performanceFee: 20,
   },
   {
     id: '5',
@@ -65,6 +73,8 @@ export const mockAgents: Agent[] = [
     tvl: 12000000,
     creator: 'Fraction AI',
     hasDeposit: true,
+    transactionFee: 0.1,
+    performanceFee: 8,
   },
   {
     id: '6',
@@ -78,6 +88,8 @@ export const mockAgents: Agent[] = [
     tvl: 2100000,
     creator: 'Perp Traders',
     hasDeposit: false,
+    transactionFee: 0.4,
+    performanceFee: 12,
   },
   {
     id: '7',
@@ -91,6 +103,8 @@ export const mockAgents: Agent[] = [
     tvl: 450000,
     creator: 'NFT Whales',
     hasDeposit: false,
+    transactionFee: 1.0,
+    performanceFee: 25,
   },
   {
     id: '8',
@@ -104,5 +118,7 @@ export const mockAgents: Agent[] = [
     tvl: 890000,
     creator: 'Fraction AI',
     hasDeposit: true,
+    transactionFee: 0.15,
+    performanceFee: 3,
   },
 ];
