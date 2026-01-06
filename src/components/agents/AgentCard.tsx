@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Agent } from '@/types/agent';
-import { StatusBadge } from './StatusBadge';
+import { SignatureBadge } from './SignatureBadge';
 import { ProtocolBadge } from './ProtocolBadge';
 import { AgentActions } from './AgentActions';
 import { formatTVL, getApyColor } from '@/lib/formatters';
@@ -23,7 +23,7 @@ export function AgentCard({ agent }: AgentCardProps) {
               <p className="text-sm text-muted-foreground">by {agent.creator}</p>
             </div>
           </div>
-          <StatusBadge status={agent.status} />
+          {agent.type === 'signature' && <SignatureBadge />}
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -60,7 +60,7 @@ export function AgentCard({ agent }: AgentCardProps) {
         </div>
         
         <div className="flex justify-end pt-2">
-          <AgentActions agentId={agent.id} />
+          <AgentActions agentId={agent.id} hasDeposit={agent.hasDeposit} />
         </div>
       </CardContent>
     </Card>

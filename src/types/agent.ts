@@ -2,13 +2,14 @@ export interface Agent {
   id: string;
   name: string;
   logo: string;
-  status: 'active' | 'inactive';
+  type: 'core' | 'signature';
   protocols: string[];
   apy: number;
   totalInstances: number;
   yourPositions: number;
   tvl: number;
   creator: string;
+  hasDeposit: boolean;
 }
 
 export type SortField = 'name' | 'apy' | 'tvl' | 'totalInstances';

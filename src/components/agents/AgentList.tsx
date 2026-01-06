@@ -44,13 +44,12 @@ export function AgentList({ agents, sortField, sortDirection, onSort }: AgentLis
       <Table>
         <TableHeader>
           <TableRow className="border-border/50 hover:bg-transparent">
-            <SortableHeader field="name" className="w-[280px]">Agent</SortableHeader>
-            <TableHead className="w-[100px]">Status</TableHead>
+            <SortableHeader field="name" className="w-[300px]">Agent</SortableHeader>
             <TableHead className="w-[180px]">Protocols</TableHead>
             <SortableHeader field="apy" className="w-[80px]">APY</SortableHeader>
             <SortableHeader field="totalInstances" className="w-[120px]">Instances</SortableHeader>
             <SortableHeader field="tvl" className="w-[100px]">TVL</SortableHeader>
-            <TableHead className="w-[140px]">Actions</TableHead>
+            <TableHead className="w-[280px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
