@@ -11,6 +11,7 @@ export function useAgentView(agents: Agent[]) {
   
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     localStorage.setItem(VIEW_MODE_KEY, viewMode);
@@ -25,8 +26,21 @@ export function useAgentView(agents: Agent[]) {
     }
   };
 
-  const sortedAgents = useMemo(() => {
-    return [...agents].sort((a, b) => {
+  const filteredAndSortedAgents = useMemo(() => {
+    let result = [...agents];
+    
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(agent => 
+        agent.name.toLowerCase().includes(query) ||
+        agent.creator.toLowerCase().includes(query) ||
+        agent.protocols.some(p => p.toLowerCase().includes(query))
+      );
+    }
+    
+    // Sort
+    result.sort((a, b) => {
       let comparison = 0;
       
       switch (sortField) {
@@ -42,11 +56,16 @@ export function useAgentView(agents: Agent[]) {
         case 'totalInstances':
           comparison = a.totalInstances - b.totalInstances;
           break;
+        case 'fees':
+          comparison = (a.transactionFee + a.performanceFee) - (b.transactionFee + b.performanceFee);
+          break;
       }
       
       return sortDirection === 'asc' ? comparison : -comparison;
     });
-  }, [agents, sortField, sortDirection]);
+    
+    return result;
+  }, [agents, sortField, sortDirection, searchQuery]);
 
   return {
     viewMode,
@@ -54,6 +73,8 @@ export function useAgentView(agents: Agent[]) {
     sortField,
     sortDirection,
     handleSort,
-    sortedAgents,
+    sortedAgents: filteredAndSortedAgents,
+    searchQuery,
+    setSearchQuery,
   };
 }
