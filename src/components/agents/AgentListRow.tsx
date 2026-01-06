@@ -1,6 +1,6 @@
 import { Agent } from '@/types/agent';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { StatusBadge } from './StatusBadge';
+import { SignatureBadge } from './SignatureBadge';
 import { ProtocolBadge } from './ProtocolBadge';
 import { AgentActions } from './AgentActions';
 import { formatTVL, getApyColor } from '@/lib/formatters';
@@ -18,13 +18,13 @@ export function AgentListRow({ agent }: AgentListRowProps) {
             {agent.logo}
           </div>
           <div>
-            <p className="font-medium text-foreground">{agent.name}</p>
+            <div className="flex items-center gap-2">
+              <p className="font-medium text-foreground">{agent.name}</p>
+              {agent.type === 'signature' && <SignatureBadge />}
+            </div>
             <p className="text-xs text-muted-foreground">by {agent.creator}</p>
           </div>
         </div>
-      </TableCell>
-      <TableCell>
-        <StatusBadge status={agent.status} />
       </TableCell>
       <TableCell>
         <div className="flex flex-wrap gap-1">
@@ -55,7 +55,7 @@ export function AgentListRow({ agent }: AgentListRowProps) {
         <span className="font-medium text-foreground">{formatTVL(agent.tvl)}</span>
       </TableCell>
       <TableCell>
-        <AgentActions agentId={agent.id} />
+        <AgentActions agentId={agent.id} hasDeposit={agent.hasDeposit} />
       </TableCell>
     </TableRow>
   );
