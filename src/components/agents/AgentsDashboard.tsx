@@ -4,8 +4,10 @@ import { ViewToggle } from './ViewToggle';
 import { AgentSearch } from './AgentSearch';
 import { AgentGrid } from './AgentGrid';
 import { AgentList } from './AgentList';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export function AgentsDashboard() {
+  const isMobile = useIsMobile();
   const { 
     viewMode, 
     setViewMode, 
@@ -17,25 +19,31 @@ export function AgentsDashboard() {
     setSearchQuery,
   } = useAgentView(mockAgents);
 
+  // On mobile, always show cards
+  const effectiveViewMode = isMobile ? 'cards' : viewMode;
+
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="mx-auto max-w-7xl space-y-6">
+    <div className="min-h-screen bg-background p-4 sm:p-6">
+      <div className="mx-auto max-w-7xl space-y-4 sm:space-y-6">
         {/* Header */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">All Agents</h1>
-            <p className="text-muted-foreground">
-              {sortedAgents.length} agents available
-            </p>
+        <div className="flex flex-col gap-3 sm:gap-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground">All Agents</h1>
+              <p className="text-sm text-muted-foreground">
+                {sortedAgents.length} agents available
+              </p>
+            </div>
+            {/* Hide view toggle on mobile */}
+            {!isMobile && (
+              <ViewToggle viewMode={viewMode} onViewModeChange={setViewMode} />
+            )}
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <AgentSearch value={searchQuery} onChange={setSearchQuery} />
-            <ViewToggle viewMode={viewMode} onViewModeChange={setViewMode} />
-          </div>
+          <AgentSearch value={searchQuery} onChange={setSearchQuery} />
         </div>
 
         {/* Content */}
-        {viewMode === 'cards' ? (
+        {effectiveViewMode === 'cards' ? (
           <AgentGrid agents={sortedAgents} />
         ) : (
           <AgentList 
