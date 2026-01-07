@@ -35,19 +35,18 @@ export function AgentsDashboard() {
                 {sortedAgents.length} agents available
               </p>
             </div>
-            {/* Hide view toggle on mobile */}
-            {!isMobile && (
-              <ViewToggle viewMode={viewMode} onViewModeChange={setViewMode} />
-            )}
+            <ViewToggle viewMode={viewMode} onViewModeChange={setViewMode} />
           </div>
           <AgentSearch value={searchQuery} onChange={setSearchQuery} />
         </div>
 
         {/* Content */}
-        {isMobile ? (
-          <AgentListCompact agents={sortedAgents} />
-        ) : effectiveViewMode === 'cards' ? (
+        {effectiveViewMode === 'cards' ? (
+          isMobile ? (
+            <AgentListCompact agents={sortedAgents} />
+          ) : (
           <AgentGrid agents={sortedAgents} />
+          )
         ) : (
           <AgentList 
             agents={sortedAgents} 

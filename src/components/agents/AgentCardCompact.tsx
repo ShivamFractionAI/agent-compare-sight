@@ -36,6 +36,7 @@ export function AgentCardCompact({ agent }: AgentCardCompactProps) {
             <CoreBadge />
           )}
         </div>
+        <p className="text-xs text-muted-foreground truncate">by {agent.creator}</p>
         <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5">
           <span className={`font-medium ${getApyColor(agent.apy)}`}>{agent.apy}% APY</span>
           <span>{formatTVL(agent.tvl)} TVL</span>
@@ -44,6 +45,15 @@ export function AgentCardCompact({ agent }: AgentCardCompactProps) {
             performanceFee={agent.performanceFee} 
           />
         </div>
+      </div>
+      
+      {/* Position/Instances */}
+      <div className="shrink-0 text-right">
+        {agent.yourPositions > 0 ? (
+          <span className="text-sm font-medium text-foreground">10.40 USDC</span>
+        ) : (
+          <span className="text-xs text-muted-foreground">{agent.totalInstances} Instances</span>
+        )}
       </div>
     </div>
   );
