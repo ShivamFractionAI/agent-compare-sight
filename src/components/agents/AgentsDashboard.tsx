@@ -4,6 +4,7 @@ import { ViewToggle } from './ViewToggle';
 import { AgentSearch } from './AgentSearch';
 import { AgentGrid } from './AgentGrid';
 import { AgentList } from './AgentList';
+import { AgentListCompact } from './AgentListCompact';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 export function AgentsDashboard() {
@@ -43,7 +44,9 @@ export function AgentsDashboard() {
         </div>
 
         {/* Content */}
-        {effectiveViewMode === 'cards' ? (
+        {isMobile ? (
+          <AgentListCompact agents={sortedAgents} />
+        ) : effectiveViewMode === 'cards' ? (
           <AgentGrid agents={sortedAgents} />
         ) : (
           <AgentList 
