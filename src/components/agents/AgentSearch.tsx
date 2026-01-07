@@ -8,15 +8,16 @@ interface AgentSearchProps {
 
 export function AgentSearch({ value, onChange }: AgentSearchProps) {
   return (
-    <div className="relative">
+    <div className="relative w-full sm:w-auto">
       <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
       <Input
         type="text"
         placeholder="Search agents..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="pl-9 w-full sm:w-[300px] bg-card/50 border-border/50"
+        className="pl-9 w-full sm:w-[300px] bg-card/50 border-border/50 h-10"
       />
     </div>
   );
 }
+
